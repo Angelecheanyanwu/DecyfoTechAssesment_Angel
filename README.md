@@ -4,8 +4,7 @@ A live dashboard tracking clinic patient-flow events (check-in → triage → co
 
 - **Backend:** Node.js, Express, Socket.io, Prisma, PostgreSQL (hosted on [Neon](https://neon.tech))
 - **Frontend:** Next.js (App Router, TypeScript), Tailwind CSS, socket.io-client
-- **Live demo:** Backend — `<railway-url>` · Frontend — `<vercel-url>` _(filled in after deploy)_
-
+- **Live demo:** Backend — https://assesment-production-8bbd.up.railway.app · Frontend — https://vercel.com/angelecheanyanwus-projects/decyfo-tech-assesment-angel
 ## Concept
 
 A patient moves through a small state machine: `CHECK_IN → TRIAGE_STARTED → TRIAGE_COMPLETE`, with `ALERT` events firing at any point for anomalies (e.g. vitals out of range). Every event carries a severity (`NORMAL`, `HIGH`, `CRITICAL`) which deterministically selects the notification channel that would be used for it:
