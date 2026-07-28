@@ -18,22 +18,23 @@ describe('StatCards', () => {
   it('shows all zero counts for an empty event list', () => {
     render(<StatCards events={[]} />);
     const values = screen.getAllByText('0');
-    expect(values).toHaveLength(3);
+    expect(values).toHaveLength(4);
   });
 
-  it('computes total, high severity, and check-in counts correctly', () => {
+  it('computes total, high severity, critical, and check-in counts correctly', () => {
     const events = [
       makeEvent({ type: 'CHECK_IN', severity: 'NORMAL' }),
       makeEvent({ type: 'CHECK_IN', severity: 'NORMAL' }),
       makeEvent({ type: 'ALERT', severity: 'HIGH' }),
+      makeEvent({ type: 'ALERT', severity: 'CRITICAL' }),
       makeEvent({ type: 'TRIAGE_COMPLETE', severity: 'NORMAL' }),
     ];
 
     render(<StatCards events={events} />);
 
-    // total=4, high severity=1, check-ins=2
-    expect(screen.getByText('4')).toBeInTheDocument();
-    expect(screen.getByText('1')).toBeInTheDocument();
+    // total=5, high severity=1, critical=1, check-ins=2
+    expect(screen.getByText('5')).toBeInTheDocument();
+    expect(screen.getAllByText('1')).toHaveLength(2);
     expect(screen.getByText('2')).toBeInTheDocument();
   });
 });

@@ -43,4 +43,12 @@ describe('EventFeed', () => {
 
     expect(screen.queryByText('HIGH')).not.toBeInTheDocument();
   });
+
+  it('marks CRITICAL severity events with a CRITICAL badge', () => {
+    const events: ClinicEvent[] = [{ ...baseEvent, severity: 'CRITICAL', type: 'ALERT' }];
+
+    render(<EventFeed events={events} />);
+
+    expect(screen.getByText('CRITICAL')).toBeInTheDocument();
+  });
 });

@@ -40,6 +40,18 @@ describe('events API (integration)', () => {
       expect(io.emit).toHaveBeenCalledWith('event:new', expect.objectContaining({ patientRef: 'TEST-1' }));
     });
 
+    it('accepts CRITICAL severity', async () => {
+      const res = await request(app).post('/api/events').send({
+        type: 'ALERT',
+        patientRef: 'TEST-CRITICAL',
+        message: 'Code blue',
+        severity: 'CRITICAL',
+      });
+
+      expect(res.status).toBe(201);
+      expect(res.body.severity).toBe('CRITICAL');
+    });
+
     it('defaults severity to NORMAL when omitted', async () => {
       const res = await request(app).post('/api/events').send({
         type: 'TRIAGE_STARTED',

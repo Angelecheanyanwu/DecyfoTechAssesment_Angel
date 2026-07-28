@@ -1,5 +1,5 @@
 export type EventType = 'CHECK_IN' | 'TRIAGE_STARTED' | 'TRIAGE_COMPLETE' | 'ALERT';
-export type Severity = 'NORMAL' | 'HIGH';
+export type Severity = 'NORMAL' | 'HIGH' | 'CRITICAL';
 
 export interface ClinicEvent {
   id: string;

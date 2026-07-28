@@ -2,6 +2,7 @@
 
 import { useEffect } from 'react';
 import type { ClinicEvent } from '@/lib/types';
+import { channelForSeverity, CHANNEL_LABEL, CHANNEL_STYLE } from '@/lib/notifications';
 import { BellRing } from 'lucide-react';
 
 export default function Toast({ event, onDismiss }: { event: ClinicEvent; onDismiss: () => void }) {
@@ -10,15 +11,23 @@ export default function Toast({ event, onDismiss }: { event: ClinicEvent; onDism
     return () => clearTimeout(timer);
   }, [event.id, onDismiss]);
 
+  const channel = channelForSeverity(event.severity);
+  const style = CHANNEL_STYLE[channel];
+
   return (
     <div
       data-testid="toast"
-      className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 shadow-lg"
+      className={`flex items-start gap-2 rounded-xl border bg-white px-4 py-3 shadow-lg ${style.card}`}
     >
-      <BellRing size={16} className="text-blue-600" />
+      <div className={`mt-0.5 rounded-full p-1.5 ${style.icon}`}>
+        <BellRing size={14} />
+      </div>
       <div>
-        <p className="text-sm font-medium text-gray-900">New event</p>
-        <p className="text-xs text-gray-500">{event.message}</p>
+        <p className="flex items-center gap-1.5 text-sm font-medium text-body">
+          <span className={`h-1.5 w-1.5 rounded-full ${style.dot}`} />
+          {CHANNEL_LABEL[channel]}
+        </p>
+        <p className="text-xs text-muted">{event.message}</p>
       </div>
     </div>
   );

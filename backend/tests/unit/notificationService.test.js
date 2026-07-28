@@ -21,6 +21,11 @@ describe('notificationService', () => {
     expect(resolveChannel(event)).toBe(CHANNELS.SMS);
   });
 
+  it('resolves CRITICAL severity events to the whatsapp channel', () => {
+    const event = { severity: 'CRITICAL' };
+    expect(resolveChannel(event)).toBe(CHANNELS.WHATSAPP);
+  });
+
   it('logs an in_app push for a NORMAL severity event', () => {
     const event = { id: '1', type: 'CHECK_IN', message: 'hello', severity: 'NORMAL' };
 
@@ -39,5 +44,15 @@ describe('notificationService', () => {
     expect(result.channel).toBe(CHANNELS.SMS);
     expect(logSpy).toHaveBeenCalledTimes(1);
     expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('[notification][sms][STUB]'));
+  });
+
+  it('logs a stubbed whatsapp notification for a CRITICAL severity event', () => {
+    const event = { id: '3', type: 'ALERT', message: 'code blue', severity: 'CRITICAL' };
+
+    const result = dispatchNotification(event);
+
+    expect(result.channel).toBe(CHANNELS.WHATSAPP);
+    expect(logSpy).toHaveBeenCalledTimes(1);
+    expect(logSpy).toHaveBeenCalledWith(expect.stringContaining('[notification][whatsapp][STUB]'));
   });
 });

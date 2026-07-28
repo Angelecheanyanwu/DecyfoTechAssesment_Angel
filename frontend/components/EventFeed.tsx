@@ -1,4 +1,5 @@
 import type { ClinicEvent } from '@/lib/types';
+import { channelForSeverity, CHANNEL_STYLE } from '@/lib/notifications';
 import { AlertTriangle, LogIn, Stethoscope, CheckCircle2 } from 'lucide-react';
 
 const TYPE_ICON: Record<ClinicEvent['type'], React.ComponentType<{ size?: number }>> = {
@@ -22,7 +23,7 @@ function formatTime(iso: string) {
 export default function EventFeed({ events }: { events: ClinicEvent[] }) {
   if (events.length === 0) {
     return (
-      <div className="rounded-xl border border-dashed p-8 text-center text-sm text-gray-500">
+      <div className="rounded-xl border border-dashed border-border p-8 text-center text-sm text-muted">
         No events yet. Click &quot;Simulate Event&quot; to get started.
       </div>
     );
@@ -32,29 +33,34 @@ export default function EventFeed({ events }: { events: ClinicEvent[] }) {
     <ul data-testid="event-feed" className="flex flex-col gap-2">
       {events.map((event) => {
         const Icon = TYPE_ICON[event.type];
-        const isHigh = event.severity === 'HIGH';
+        const channel = channelForSeverity(event.severity);
+        const style = CHANNEL_STYLE[channel];
+        const isNormal = event.severity === 'NORMAL';
+
         return (
           <li
             key={event.id}
             data-testid="event-item"
             className={`flex items-center gap-3 rounded-xl border p-4 shadow-sm ${
-              isHigh ? 'border-red-300 bg-red-50' : 'border-gray-200 bg-white'
+              isNormal ? 'border-border bg-white' : style.card
             }`}
           >
-            <div className={`shrink-0 rounded-full p-2 ${isHigh ? 'bg-red-100 text-red-600' : 'bg-blue-50 text-blue-600'}`}>
+            <div className={`shrink-0 rounded-full p-2 ${isNormal ? 'bg-primary-light/10 text-primary-dark' : style.icon}`}>
               <Icon size={18} />
             </div>
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">
-                <span className="font-medium text-gray-900">{TYPE_LABEL[event.type]}</span>
-                {isHigh && (
-                  <span className="rounded-full bg-red-600 px-2 py-0.5 text-xs font-semibold text-white">HIGH</span>
+                <span className="font-medium text-body">{TYPE_LABEL[event.type]}</span>
+                {!isNormal && (
+                  <span className={`rounded-full px-2 py-0.5 text-xs font-semibold ${style.badge}`}>
+                    {event.severity}
+                  </span>
                 )}
-                <span className="text-xs text-gray-400">{event.patientRef}</span>
+                <span className="text-xs text-subtle">{event.patientRef}</span>
               </div>
-              <p className="truncate text-sm text-gray-600">{event.message}</p>
+              <p className="truncate text-sm text-muted">{event.message}</p>
             </div>
-            <span className="shrink-0 text-xs text-gray-400">{formatTime(event.createdAt)}</span>
+            <span className="shrink-0 text-xs text-subtle">{formatTime(event.createdAt)}</span>
           </li>
         );
       })}

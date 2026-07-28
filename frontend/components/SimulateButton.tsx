@@ -23,7 +23,7 @@ export default function SimulateButton({ onError }: { onError?: (message: string
       type="button"
       onClick={handleClick}
       disabled={loading}
-      className="flex items-center gap-2 rounded-xl bg-blue-600 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-blue-700 disabled:opacity-50"
+      className="flex items-center gap-2 rounded-xl bg-primary-dark px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-primary-medium disabled:opacity-50"
     >
       <Zap size={16} />
       {loading ? 'Simulating…' : 'Simulate Event'}
