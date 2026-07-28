@@ -1,0 +1,105 @@
+{
+  "info": {
+    "name": "Clinic Monitor API",
+    "description": "Endpoints for the Clinic Patient Flow Monitor backend (health check, event feed, event creation, simulate).",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:4000",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health Check",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/health",
+          "host": ["{{baseUrl}}"],
+          "path": ["health"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "List Events",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/events?limit=50",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "events"],
+          "query": [
+            {
+              "key": "limit",
+              "value": "50"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Event",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"type\": \"CHECK_IN\",\n  \"patientRef\": \"P-1234\",\n  \"message\": \"Patient checked in at front desk\",\n  \"severity\": \"NORMAL\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/events",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "events"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Create Event - HIGH severity alert",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"type\": \"ALERT\",\n  \"patientRef\": \"P-5678\",\n  \"message\": \"Vitals out of range, needs immediate attention\",\n  \"severity\": \"HIGH\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/events",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "events"]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Simulate Random Event",
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/events/simulate",
+          "host": ["{{baseUrl}}"],
+          "path": ["api", "events", "simulate"]
+        }
+      },
+      "response": []
+    }
+  ]
+}

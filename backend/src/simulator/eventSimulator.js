@@ -2,7 +2,8 @@ const SAMPLES = [
   { type: 'CHECK_IN', message: 'Patient checked in at front desk', severity: 'NORMAL' },
   { type: 'TRIAGE_STARTED', message: 'Triage started', severity: 'NORMAL' },
   { type: 'TRIAGE_COMPLETE', message: 'Triage complete, patient sent to ward', severity: 'NORMAL' },
-  { type: 'ALERT', message: 'Vitals out of range, needs immediate attention', severity: 'HIGH' },
+  { type: 'ALERT', message: 'Vitals out of range, needs attention', severity: 'HIGH' },
+  { type: 'ALERT', message: 'Cardiac arrest — code blue', severity: 'CRITICAL' },
 ];
 
 function randomEventData() {

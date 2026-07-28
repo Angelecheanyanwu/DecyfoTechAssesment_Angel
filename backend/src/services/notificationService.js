@@ -4,8 +4,14 @@ const CHANNELS = {
   WHATSAPP: 'whatsapp',
 };
 
+const SEVERITY_CHANNEL = {
+  NORMAL: CHANNELS.IN_APP,
+  HIGH: CHANNELS.SMS,
+  CRITICAL: CHANNELS.WHATSAPP,
+};
+
 function resolveChannel(event) {
-  return event.severity === 'HIGH' ? CHANNELS.SMS : CHANNELS.IN_APP;
+  return SEVERITY_CHANNEL[event.severity] || CHANNELS.IN_APP;
 }
 
 function dispatchNotification(event) {

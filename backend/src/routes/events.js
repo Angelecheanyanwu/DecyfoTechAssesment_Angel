@@ -2,7 +2,7 @@ const express = require('express');
 const { randomEventData } = require('../simulator/eventSimulator');
 
 const EVENT_TYPES = ['CHECK_IN', 'TRIAGE_STARTED', 'TRIAGE_COMPLETE', 'ALERT'];
-const SEVERITIES = ['NORMAL', 'HIGH'];
+const SEVERITIES = ['NORMAL', 'HIGH', 'CRITICAL'];
 
 function createEventsRouter({ eventService }) {
   const router = express.Router();

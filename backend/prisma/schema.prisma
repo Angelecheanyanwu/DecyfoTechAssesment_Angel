@@ -17,6 +17,7 @@ enum EventType {
 enum Severity {
   NORMAL
   HIGH
+  CRITICAL
 }
 
 model Event {
