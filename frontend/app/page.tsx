@@ -53,7 +53,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex min-h-screen bg-surface">
+    <div className="flex h-screen overflow-hidden bg-surface">
       <Sidebar />
 
       <div className="relative flex-1 overflow-hidden">
@@ -62,8 +62,8 @@ export default function Home() {
           className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-ellipse opacity-30 blur-3xl"
         />
 
-        <main className="relative mx-auto flex max-w-5xl flex-col gap-6 p-6 md:p-8">
-          <header className="flex items-center justify-between">
+        <main className="relative mx-auto flex h-full max-w-5xl flex-col gap-6 p-6 md:p-8">
+          <header className="flex shrink-0 items-center justify-between">
             <div>
               <h1 className="text-xl font-semibold text-body">Dashboard</h1>
               <p className="flex items-center gap-1.5 text-sm text-muted">
@@ -77,24 +77,30 @@ export default function Home() {
           </header>
 
           {error && (
-            <div className="rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">{error}</div>
+            <div className="shrink-0 rounded-xl border border-red-200 bg-red-50 p-3 text-sm text-red-700">
+              {error}
+            </div>
           )}
 
-          <StatCards events={events} />
+          <div className="shrink-0">
+            <StatCards events={events} />
+          </div>
 
-          <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
-            <div className="lg:col-span-2">
+          <div className="grid min-h-0 flex-1 grid-cols-1 gap-6 lg:grid-cols-3">
+            <div className="min-h-0 overflow-y-auto pr-1 lg:col-span-2">
               <EventFeed events={events} />
             </div>
-            <WardOverview />
+            <div className="min-h-0 overflow-y-auto pr-1">
+              <WardOverview />
+            </div>
           </div>
         </main>
-      </div>
 
-      <div className="fixed bottom-4 right-4 z-10 flex flex-col gap-2">
-        {toasts.map((event) => (
-          <Toast key={event.id} event={event} onDismiss={() => dismissToast(event.id)} />
-        ))}
+        <div className="absolute left-6 top-24 z-20 flex flex-col gap-2 md:left-8">
+          {toasts.map((event) => (
+            <Toast key={event.id} event={event} onDismiss={() => dismissToast(event.id)} />
+          ))}
+        </div>
       </div>
     </div>
   );

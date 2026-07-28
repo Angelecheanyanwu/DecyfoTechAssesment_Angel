@@ -28,6 +28,7 @@
   --animate-pulse-soft: pulseSoft 2.2s infinite;
   --animate-float-y: floatY 6.5s ease-in-out infinite;
   --animate-float-y2: floatY 7.5s ease-in-out infinite;
+  --animate-toast-in: toastInLeft 0.3s ease-out;
 }
 
 @keyframes pulseSoft {
@@ -49,6 +50,17 @@
   }
   50% {
     transform: translateY(-9px);
+  }
+}
+
+@keyframes toastInLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
   }
 }
 

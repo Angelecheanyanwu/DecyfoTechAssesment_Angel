@@ -17,7 +17,7 @@ export default function Toast({ event, onDismiss }: { event: ClinicEvent; onDism
   return (
     <div
       data-testid="toast"
-      className={`flex items-start gap-2 rounded-xl border bg-white px-4 py-3 shadow-lg ${style.card}`}
+      className={`animate-toast-in flex items-start gap-2 rounded-xl border bg-white px-4 py-3 shadow-lg ${style.card}`}
     >
       <div className={`mt-0.5 rounded-full p-1.5 ${style.icon}`}>
         <BellRing size={14} />
